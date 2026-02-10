@@ -1,0 +1,44 @@
+# Contact-aware Peg-in-Hole (ROS 2 + Gazebo Sim)
+
+Contact-aware peg-in-hole insertion using ROS 2 Humble, Gazebo Sim (gz-sim, Bullet), UR3 + ros2_control (position control). 
+FSM implements guarded insertion with contact-triggered retract + Archimedean spiral search recovery.
+
+## Demo
+- Video: https://drive.google.com/file/d/1re5EGQPHXnCAw4o3lzkbufNX7QXckNZU/view?usp=drive_link
+
+## Stack
+- Ubuntu 22.04, ROS 2 Humble
+- Gazebo Sim (gz-sim), Bullet physics
+- ros2_control: joint_state_broadcaster + joint_trajectory_controller (position)
+- Pinocchio: differential IK (DLS)
+- ros_gz_bridge: contact sensor topic bridge
+- No MoveIt
+
+## Behavior (FSM)
+States:
+- GUARDED_INSERT: step in Z until depth reached without contact
+- RETRACT: back off on persistent contact
+- SEARCH_XY: Archimedean spiral in XY
+- GO_UP: retract straight up after success
+- SUCCESS / FAILURE
+
+Success condition:
+- depth >= 10cm without contact for 1s
+
+Failure condition:
+- retries exceeded or timeout
+
+## How to run
+### Build
+```bash
+colcon build --symlink-install
+source install/setup.bash
+
+### Launch gazebo
+ros2 launch my_arm_description gz_control_arm.launch.py
+
+### Run program
+
+ros2 run arm_control peg_insertion_node
+
+
