@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="hole_plate">
+    <static>true</static>
+    <link name="link">
+      <visual name="visual_mesh">
+  <geometry>
+    <mesh>
+      <uri>model://hole_plate/meshes/hole_plate.obj</uri>
+      <scale>1 1 1</scale>
+    </mesh>
+  </geometry>
+</visual>
+
+<collision name="collision_mesh">
+  <geometry>
+    <mesh>
+      <uri>model://hole_plate/meshes/hole_plate.obj</uri>
+      <scale>1 1 1</scale>
+    </mesh>
+  </geometry>
+</collision>
+
+      <collision name="collision">
+        <geometry>
+          <box><size>0.3 0.3 0.02</size></box>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

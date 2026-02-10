@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <world name="empty">
+
+    <!-- Physics -->
+<physics name="step1ms" type="bullet">
+  <max_step_size>0.001</max_step_size>
+  <real_time_factor>1</real_time_factor>
+</physics>
+
+
+    <!-- Defaults -->
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+
+    <!-- Sensors -->
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <!-- Contact system (required) -->
+    <plugin filename="gz-sim-contact-system" name="gz::sim::systems::Contact"/>
+
+    <!-- Light -->
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Sun</uri>
+    </include>
+
+    <!-- Ground -->
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Ground Plane</uri>
+    </include>
+
+    <!-- Your visual plate model (unchanged) -->
+    <include>
+      <uri>model://hole_plate</uri>
+      <pose>0.6 0 0.0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://ur3_peg_sdf</uri>
+      <name>ur3</name>
+      <pose>0.35 0 0 0 0 0</pose>
+    </include>
+
+
+
+    <!-- Falling box test -->
+    <model name="falling_box">
+      <static>false</static>
+      <pose>0.6 0 2.0 0 0 0</pose>
+
+      <link name="link">
+        <inertial>
+          <mass>1.0</mass>
+          <inertia>
+            <ixx>0.001</ixx><ixy>0</ixy><ixz>0</ixz>
+            <iyy>0.001</iyy><iyz>0</iyz>
+            <izz>0.001</izz>
+          </inertia>
+        </inertial>
+
+        <collision name="col">
+          <geometry>
+            <box><size>0.05 0.05 0.05</size></box>
+          </geometry>
+        </collision>
+
+        <visual name="vis">
+          <geometry>
+            <box><size>0.05 0.05 0.05</size></box>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>

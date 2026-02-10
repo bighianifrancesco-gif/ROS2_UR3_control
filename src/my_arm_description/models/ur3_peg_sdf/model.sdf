@@ -1,0 +1,514 @@
+<?xml version="1.0"?>
+<sdf version="1.9">
+  <model name="ur3">
+
+    <!-- Keep this joint only if you are spawning with: -allow_renaming false AND using world as parent.
+         If you include this model via <include> in a world, you can delete base_joint and just pose the include.
+         For now I keep it because it came from your conversion. -->
+    <joint name='base_joint' type='fixed'>
+      <pose relative_to='__model__'>0 0 0 0 0 0</pose>
+      <parent>world</parent>
+      <child>base_link</child>
+    </joint>
+
+    <link name='base_link'>
+      <pose relative_to='base_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>2</mass>
+        <inertia>
+          <ixx>0.0030531654453999999</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0030531654453999999</iyy>
+          <iyz>0</iyz>
+          <izz>0.0056249999999999998</izz>
+        </inertia>
+      </inertial>
+      <collision name='base_link_inertia_collision'>
+        <pose>0 0 0 0 0 -2.4492935982947059e-16</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://ur_description/meshes/ur3/collision/base.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='base_link_inertia_visual'>
+        <pose>0 0 0 0 0 -2.4492935982947059e-16</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://ur_description/meshes/ur3/visual/base.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name='shoulder_pan_joint' type='revolute'>
+      <pose relative_to='base_link'>0 0 0.15190000000000001 0 0 3.1415926535897931</pose>
+      <parent>base_link</parent>
+      <child>shoulder_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-6.2831853071795862</lower>
+          <upper>6.2831853071795862</upper>
+          <effort>56</effort>
+          <velocity>3.1415926535897931</velocity>
+        </limit>
+        <dynamics>
+          <damping>0</damping>
+          <friction>0</friction>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <link name='shoulder_link'>
+      <pose relative_to='shoulder_pan_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 -0.02 0 0 0</pose>
+        <mass>2</mass>
+        <inertia>
+          <ixx>0.0080931666666666652</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0080931666666666652</iyy>
+          <iyz>0</iyz>
+          <izz>0.0056249999999999998</izz>
+        </inertia>
+      </inertial>
+      <collision name='shoulder_link_collision'>
+        <pose>0 0 0 0 0 3.1415926535897931</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://ur_description/meshes/ur3/collision/shoulder.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='shoulder_link_visual'>
+        <pose>0 0 0 0 0 3.1415926535897931</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://ur_description/meshes/ur3/visual/shoulder.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name='shoulder_lift_joint' type='revolute'>
+      <pose relative_to='shoulder_link'>0 0 0 1.5707963270000003 0 0</pose>
+      <parent>shoulder_link</parent>
+      <child>upper_arm_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-6.2831853071795862</lower>
+          <upper>6.2831853071795862</upper>
+          <effort>56</effort>
+          <velocity>3.1415926535897931</velocity>
+        </limit>
+        <dynamics>
+          <damping>0</damping>
+          <friction>0</friction>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <link name='upper_arm_link'>
+      <pose relative_to='shoulder_lift_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.11365 0 0.1157 0 1.5707963267948966 0</pose>
+        <mass>3.4199999999999999</mass>
+        <inertia>
+          <ixx>0.021728491912500002</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.021728491912500002</iyy>
+          <iyz>0</iyz>
+          <izz>0.0096187500000000006</izz>
+        </inertia>
+      </inertial>
+      <collision name='upper_arm_link_collision'>
+        <pose>0 0 0.1198 1.5707963267948959 5.5511151231257827e-17 -1.5707963267948959</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://ur_description/meshes/ur3/collision/upperarm.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='upper_arm_link_visual'>
+        <pose>0 0 0.1198 1.5707963267948959 5.5511151231257827e-17 -1.5707963267948959</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://ur_description/meshes/ur3/visual/upperarm.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name='elbow_joint' type='revolute'>
+      <pose relative_to='upper_arm_link'>-0.24365000000000001 0 0 0 0 0</pose>
+      <parent>upper_arm_link</parent>
+      <child>forearm_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-3.1415926535897931</lower>
+          <upper>3.1415926535897931</upper>
+          <effort>28</effort>
+          <velocity>3.1415926535897931</velocity>
+        </limit>
+        <dynamics>
+          <damping>0</damping>
+          <friction>0</friction>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <link name='forearm_link'>
+      <pose relative_to='elbow_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.16325000000000001 0 0.023800000000000002 0 1.5707963267948966 0</pose>
+        <mass>1.26</mass>
+        <inertia>
+          <ixx>0.0065468090624999998</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0065468090624999998</iyy>
+          <iyz>0</iyz>
+          <izz>0.00354375</izz>
+        </inertia>
+      </inertial>
+      <collision name='forearm_link_collision'>
+        <pose>0 0 0.0275 1.5707963267948959 5.5511151231257827e-17 -1.5707963267948959</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://ur_description/meshes/ur3/collision/forearm.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='forearm_link_visual'>
+        <pose>0 0 0.0275 1.5707963267948959 5.5511151231257827e-17 -1.5707963267948959</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://ur_description/meshes/ur3/visual/forearm.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name='wrist_1_joint' type='revolute'>
+      <pose relative_to='forearm_link'>-0.21325 0 0.11235000000000001 0 0 0</pose>
+      <parent>forearm_link</parent>
+      <child>wrist_1_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-6.2831853071795862</lower>
+          <upper>6.2831853071795862</upper>
+          <effort>12</effort>
+          <velocity>6.2831853071795862</velocity>
+        </limit>
+        <dynamics>
+          <damping>0</damping>
+          <friction>0</friction>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <link name='wrist_1_link'>
+      <pose relative_to='wrist_1_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 -0.01 0 0 0 0</pose>
+        <mass>0.80000000000000004</mass>
+        <inertia>
+          <ixx>0.0016106415000000001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.0016106415000000001</iyy>
+          <iyz>0</iyz>
+          <izz>0.0022499999999999998</izz>
+        </inertia>
+      </inertial>
+      <collision name='wrist_1_link_collision'>
+        <pose>0 0 -0.085000000000000006 1.5707963267948959 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://ur_description/meshes/ur3/collision/wrist1.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='wrist_1_link_visual'>
+        <pose>0 0 -0.085000000000000006 1.5707963267948959 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://ur_description/meshes/ur3/visual/wrist1.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name='wrist_2_joint' type='revolute'>
+      <pose relative_to='wrist_1_link'>0 -0.085349999999999995 -1.750557762378351e-11 1.5707963270000003 0 0</pose>
+      <parent>wrist_1_link</parent>
+      <child>wrist_2_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-6.2831853071795862</lower>
+          <upper>6.2831853071795862</upper>
+          <effort>12</effort>
+          <velocity>6.2831853071795862</velocity>
+        </limit>
+        <dynamics>
+          <damping>0</damping>
+          <friction>0</friction>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <link name='wrist_2_link'>
+      <pose relative_to='wrist_2_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0.01 0 0 0 0</pose>
+        <mass>0.80000000000000004</mass>
+        <inertia>
+          <ixx>0.001572174</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.001572174</iyy>
+          <iyz>0</iyz>
+          <izz>0.0022499999999999998</izz>
+        </inertia>
+      </inertial>
+      <collision name='wrist_2_link_collision'>
+        <pose>0 0 -0.083000000000000004 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://ur_description/meshes/ur3/collision/wrist2.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='wrist_2_link_visual'>
+        <pose>0 0 -0.083000000000000004 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://ur_description/meshes/ur3/visual/wrist2.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name='wrist_3_joint' type='revolute'>
+      <pose relative_to='wrist_2_link'>0 0.081900000000000001 -1.679797079540562e-11 -1.5707963270000003 1.2246467991473527e-16 -1.224646799147353e-16</pose>
+      <parent>wrist_2_link</parent>
+      <child>wrist_3_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <effort>12</effort>
+          <velocity>6.2831853071795862</velocity>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <damping>0</damping>
+          <friction>0</friction>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <link name='wrist_3_link'>
+      <pose relative_to='wrist_3_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 -0.02 0 0 0</pose>
+        <mass>0.34999999999999998</mass>
+        <inertia>
+          <ixx>0.00013626666666666671</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00013626666666666671</iyy>
+          <iyz>0</iyz>
+          <izz>0.00017919999999999999</izz>
+        </inertia>
+      </inertial>
+      <collision name='wrist_3_link_collision'>
+        <pose>0 -0.0025500000000000002 -0.082000000000000003 1.5707963267948959 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://ur_description/meshes/ur3/collision/wrist3.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='wrist_3_link_visual'>
+        <pose>0 -0.0025500000000000002 -0.082000000000000003 1.5707963267948959 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://ur_description/meshes/ur3/visual/wrist3.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+
+      <sensor name='tool0_imu' type='imu'>
+        <always_on>true</always_on>
+        <update_rate>200</update_rate>
+        <topic>imu</topic>
+        <pose>0 0 0 3.6732099999999997e-06 3.6732100000000001e-06 2.8072399999918843e-16</pose>
+        <imu/>
+      </sensor>
+    </link>
+
+    <!-- Peg link already correctly attached to wrist_3_link by your conversion -->
+    <joint name='tool0_to_peg' type='fixed'>
+      <pose relative_to='wrist_3_link'>0 0 0 -2.4651903288156619e-32 -2.2204460492503131e-16 2.2204460492503131e-16</pose>
+      <parent>wrist_3_link</parent>
+      <child>peg_link</child>
+    </joint>
+
+    <link name='peg_link'>
+      <pose relative_to='tool0_to_peg'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0.050000000000000003 0 0 0</pose>
+        <mass>0.050000000000000003</mass>
+        <inertia>
+          <ixx>1.0000000000000001e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1.0000000000000001e-05</iyy>
+          <iyz>0</iyz>
+          <izz>1.0000000000000001e-05</izz>
+        </inertia>
+      </inertial>
+
+      <!-- Keep the converted collision names (they already exist and collide) -->
+      <collision name='peg_link_collision'>
+        <pose>0 0 0.050000000000000003 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.10000000000000001</length>
+            <radius>0.0050000000000000001</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+
+      <visual name='peg_link_visual'>
+        <pose>0 0 0.050000000000000003 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.10000000000000001</length>
+            <radius>0.0050000000000000001</radius>
+          </cylinder>
+        </geometry>
+      </visual>
+    </link>
+
+    <joint name='peg_to_sensor' type='fixed'>
+      <pose relative_to='peg_link'>0 0 0 0 0 0</pose>
+      <parent>peg_link</parent>
+      <child>peg_sensor_link</child>
+    </joint>
+
+    <!-- FIXED: peg_sensor_link now has collision geometry + unfiltered contact sensor -->
+    <link name='peg_sensor_link'>
+      <pose relative_to='peg_to_sensor'>0 0 0 0 0 0</pose>
+
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.001</mass>
+        <inertia>
+          <ixx>1e-7</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1e-7</iyy>
+          <iyz>0</iyz>
+          <izz>1e-7</izz>
+        </inertia>
+      </inertial>
+
+      <!-- Big debug collision: impossible to miss. Once it works, shrink to a thin disk. -->
+      <collision name='peg_tip_col'>
+        <pose>0 0 0.10 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0055</radius>
+            <length>0.01</length>
+          </cylinder>
+        </geometry>
+      </collision>
+
+      <visual name='peg_tip_vis'>
+        <pose>0 0 0.10 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.0055</radius>
+            <length>0.01</length>
+          </cylinder>
+        </geometry>
+      </visual>
+
+      <sensor name='peg_tip_contact' type='contact'>
+        <always_on>true</always_on>
+        <update_rate>200</update_rate>
+        <topic>peg_tip_contact</topic>
+        <contact>
+            <collision>peg_tip_col</collision>
+        </contact>
+      </sensor>
+
+    </link>
+
+    <!-- Keep your gz_ros2_control plugin with the real absolute YAML path -->
+    <plugin name='gz_ros2_control::GazeboSimROS2ControlPlugin' filename='gz_ros2_control-system'>
+      <robot_param>robot_description</robot_param>
+      <robot_param_node>robot_state_publisher</robot_param_node>
+      <parameters>/home/francesco/ros2_ws/install/my_arm_description/share/my_arm_description/config/controllers.yaml</parameters>
+      <controller_manager_name>controller_manager</controller_manager_name>
+    </plugin>
+
+    <!-- Frames: keep as generated -->
+    <frame name='base_link-base_fixed_joint' attached_to='base_link'>
+      <pose>0 0 0 0 0 3.1415926535897931</pose>
+    </frame>
+    <frame name='base' attached_to='base_link-base_fixed_joint'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='base_link-base_link_inertia' attached_to='base_link'>
+      <pose>0 0 0 0 0 3.1415926535897931</pose>
+    </frame>
+    <frame name='base_link_inertia' attached_to='base_link-base_link_inertia'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='flange-tool0' attached_to='flange'>
+      <pose>0 0 0 1.5707963267948959 -5.5511151231257827e-17 1.5707963267948959</pose>
+    </frame>
+    <frame name='tool0' attached_to='flange-tool0'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='wrist_3-flange' attached_to='wrist_3_link'>
+      <pose>0 0 0 -1.5707963267948957 -1.5707963267948966 0</pose>
+    </frame>
+    <frame name='flange' attached_to='wrist_3-flange'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+    <frame name='wrist_3_link-ft_frame' attached_to='wrist_3_link'>
+      <pose>0 0 0 3.1415926535897931 0 0</pose>
+    </frame>
+    <frame name='ft_frame' attached_to='wrist_3_link-ft_frame'>
+      <pose>0 0 0 0 0 0</pose>
+    </frame>
+
+  </model>
+</sdf>
