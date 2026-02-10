@@ -41,4 +41,12 @@ ros2 launch my_arm_description gz_control_arm.launch.py
 
 ros2 run arm_control peg_insertion_node
 
+## Control logic
+
+The task is implemented as a finite-state machine with contact-triggered recovery
+(guarded insertion → retract → spiral search → retry).
+
+FSM diagram: [docs/fsm.md](docs/fsm.md)
+
+
 
